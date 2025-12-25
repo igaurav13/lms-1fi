@@ -57,3 +57,22 @@ export async function POST(req) {
     );
   }
 }
+
+
+export async function GET() {
+  const loans = await prisma.loan.findMany({
+    where: { status: "ACTIVE" },
+    include: {
+      loanApplication: {
+        include: {
+          borrower: true,
+          loanProduct: true,
+          collaterals: true
+        }
+      }
+    },
+    orderBy: { createdAt: "desc" }
+  });
+
+  return Response.json(loans);
+}
