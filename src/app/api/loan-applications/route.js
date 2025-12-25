@@ -1,27 +1,68 @@
 import { prisma } from "@/lib/prisma";
 
 /**
- * POST /api/loan-applications
- * Create a new loan application (API-FIRST)
+ * Create Loan Application
+ * Used by dashboard + fintech partner APIs
  */
 export async function POST(req) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  const application = await prisma.loanApplication.create({
-    data: {
-      borrowerId: body.borrowerId,
-      loanProductId: body.loanProductId,
-      requestedAmount: body.requestedAmount,
-      status: "DRAFT",
-    },
-  });
+    if (!body.borrowerId || !body.loanProductId || !body.requestedAmount) {
+      return Response.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
 
-  return Response.json(application, { status: 201 });
+    // Validate borrower
+    const borrower = await prisma.borrower.findUnique({
+      where: { id: body.borrowerId }
+    });
+
+    if (!borrower) {
+      return Response.json(
+        { error: "Borrower not found" },
+        { status: 404 }
+      );
+    }
+
+    // Validate loan product
+    const product = await prisma.loanProduct.findUnique({
+      where: { id: body.loanProductId }
+    });
+
+    if (!product) {
+      return Response.json(
+        { error: "Loan product not found" },
+        { status: 404 }
+      );
+    }
+
+    const application = await prisma.loanApplication.create({
+      data: {
+        borrowerId: body.borrowerId,
+        loanProductId: body.loanProductId,
+        requestedAmount: body.requestedAmount,
+        eligibleAmount: null,
+        status: "DRAFT"
+      }
+    });
+
+    return Response.json(application, { status: 201 });
+
+  } catch (err) {
+    console.error("Loan Application Create Error", err);
+    return Response.json(
+      { error: "Failed to create loan application" },
+      { status: 500 }
+    );
+  }
 }
 
+
 /**
- * GET /api/loan-applications
- * Ops view – list all applications
+ * List Loan Applications (Ops View)
  */
 export async function GET() {
   const applications = await prisma.loanApplication.findMany({
@@ -29,9 +70,9 @@ export async function GET() {
       borrower: true,
       loanProduct: true,
       collaterals: true,
-      loan: true,
+      loan: true
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "desc" }
   });
 
   return Response.json(applications);
