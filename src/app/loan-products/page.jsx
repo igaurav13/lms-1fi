@@ -1,41 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useLoanProducts } from "@/hooks/useLoanProducts";
 
 export default function LoanProductsPage() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/loan-products")
-      .then(res => res.json())
-      .then(setProducts);
-  }, []);
+  const { data, isLoading } = useLoanProducts();
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Loan Products</h1>
+    <Card className="w-[90%] mx-auto mt-8">
+      <CardHeader>
+        <CardTitle>Loan Products</CardTitle>
+      </CardHeader>
 
-      <table className="w-full border">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Interest</th>
-            <th>Max LTV</th>
-            <th>Range</th>
-          </tr>
-        </thead>
+      <CardContent>
+        {isLoading ? (
+          <Skeleton className="h-40 w-full" />
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Interest</TableHead>
+                <TableHead>Max LTV</TableHead>
+                <TableHead>Range</TableHead>
+              </TableRow>
+            </TableHeader>
 
-        <tbody>
-          {products.map(p => (
-            <tr key={p.id}>
-              <td>{p.name}</td>
-              <td>{p.interestRate}%</td>
-              <td>{p.maxLTV}</td>
-              <td>{p.minLoanAmount} – {p.maxLoanAmount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            <TableBody>
+              {data?.map(p => (
+                <TableRow key={p.id}>
+                  <TableCell className="font-medium">{p.name}</TableCell>
+                  <TableCell>{p.interestRate}%</TableCell>
+                  <TableCell>{p.maxLTV}</TableCell>
+                  <TableCell>
+                    {p.minLoanAmount} — {p.maxLoanAmount}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </CardContent>
+    </Card>
   );
 }

@@ -1,41 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { useLoanApplications } from "@/hooks/useLoanApplications";
+
+const statusMap = {
+  DRAFT: "secondary",
+  ELIGIBLE: "outline",
+  APPROVED: "success",
+  DISBURSED: "default",
+};
 
 export default function LoanApplicationsPage() {
-  const [apps, setApps] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/loan-applications")
-      .then(res => res.json())
-      .then(setApps);
-  }, []);
+  const { data } = useLoanApplications();
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Loan Applications</h1>
+    <Card className="w-[90%] mx-auto mt-8">
+      <CardHeader>
+        <CardTitle>Loan Applications</CardTitle>
+      </CardHeader>
 
-      <table className="w-full border">
-        <thead>
-          <tr>
-            <th>Borrower</th>
-            <th>Product</th>
-            <th>Requested</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Borrower</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead>Requested</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <tbody>
-          {apps.map(a => (
-            <tr key={a.id}>
-              <td>{a.borrower.fullName}</td>
-              <td>{a.loanProduct.name}</td>
-              <td>{a.requestedAmount}</td>
-              <td>{a.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          <TableBody>
+            {data?.map(a => (
+              <TableRow key={a.id}>
+                <TableCell>{a.borrower.fullName}</TableCell>
+                <TableCell>{a.loanProduct.name}</TableCell>
+                <TableCell>₹{a.requestedAmount}</TableCell>
+                <TableCell>
+                  <Badge variant={statusMap[a.status] || "outline"}>
+                    {a.status}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 }
