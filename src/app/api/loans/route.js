@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
 
-/**
- * Create loan from approved application
- */
 export async function POST(req) {
   try {
     const body = await req.json();
