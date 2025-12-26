@@ -19,7 +19,7 @@ export default function LoansPage() {
         subtitle="Active disbursed LAMF accounts currently under servicing"
       />
 
-      <Card className="rounded-[var(--radius-card)]
+      <Card className="rounded-(--radius-card)
         border border-[rgba(108,40,217,.12)]
         shadow-[0_16px_36px_rgba(108,40,217,0.08)]">
 
