@@ -1,53 +1,58 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { useLoanApplications } from "@/hooks/useLoanApplications";
+import { PageShell } from "@/components/page-shell";
+import { PageHeader } from "@/components/page-header";
 
-const statusMap = {
-  DRAFT: "secondary",
-  ELIGIBLE: "outline",
-  APPROVED: "success",
-  DISBURSED: "default",
-};
+import { Card, CardContent } from "@/components/ui/card";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+
+import { StatusBadge } from "@/components/status-badge";
+import { useLoanApplications } from "@/hooks/useLoanApplications";
 
 export default function LoanApplicationsPage() {
   const { data } = useLoanApplications();
 
   return (
-    <Card className="w-[90%] mx-auto mt-8">
-      <CardHeader>
-        <CardTitle>Loan Applications</CardTitle>
-      </CardHeader>
+    <PageShell>
 
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Borrower</TableHead>
-              <TableHead>Product</TableHead>
-              <TableHead>Requested</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
+      <PageHeader
+        title="Loan Applications"
+        subtitle="All submitted & in-progress loan applications"
+      />
 
-          <TableBody>
-            {data?.map(a => (
-              <TableRow key={a.id}>
-                <TableCell>{a.borrower.fullName}</TableCell>
-                <TableCell>{a.loanProduct.name}</TableCell>
-                <TableCell>₹{a.requestedAmount}</TableCell>
-                <TableCell>
-                  <Badge variant={statusMap[a.status] || "outline"}>
-                    {a.status}
-                  </Badge>
-                </TableCell>
+      <Card className="rounded-[1.25rem]
+        border border-[rgba(108,40,217,.12)]
+        shadow-[0_16px_36px_rgba(108,40,217,0.08)]">
+
+        <CardContent>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Borrower</TableHead>
+                <TableHead>Product</TableHead>
+                <TableHead>Requested</TableHead>
+                <TableHead>Status</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+            </TableHeader>
+
+            <TableBody>
+              {data?.map(a => (
+                <TableRow key={a.id} className="hover:bg-surface/50">
+                  <TableCell>{a.borrower.fullName}</TableCell>
+                  <TableCell>{a.loanProduct.name}</TableCell>
+                  <TableCell>₹{a.requestedAmount}</TableCell>
+                  <TableCell>
+                    <StatusBadge value={a.status} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+        </CardContent>
+      </Card>
+
+    </PageShell>
   );
 }

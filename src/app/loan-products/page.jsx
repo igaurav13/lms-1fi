@@ -1,48 +1,57 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { PageShell } from "@/components/page-shell";
+import { PageHeader } from "@/components/page-header";
+
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import { useLoanProducts } from "@/hooks/useLoanProducts";
 
 export default function LoanProductsPage() {
-  const { data, isLoading } = useLoanProducts();
+  const { data } = useLoanProducts();
 
   return (
-    <Card className="w-[90%] mx-auto mt-8">
-      <CardHeader>
-        <CardTitle>Loan Products</CardTitle>
-      </CardHeader>
+    <PageShell>
 
-      <CardContent>
-        {isLoading ? (
-          <Skeleton className="h-40 w-full" />
-        ) : (
+      <PageHeader
+        title="Loan Products"
+        subtitle="Configured LAMF lending products & risk parameters"
+      />
+
+      <Card className="rounded-[1.25rem]
+        border border-[rgba(108,40,217,.12)]
+        shadow-[0_16px_36px_rgba(108,40,217,0.08)]">
+
+        <CardContent>
+
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Interest</TableHead>
                 <TableHead>Max LTV</TableHead>
-                <TableHead>Range</TableHead>
+                <TableHead>Loan Range</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
               {data?.map(p => (
-                <TableRow key={p.id}>
+                <TableRow key={p.id} className="hover:bg-surface/50">
                   <TableCell className="font-medium">{p.name}</TableCell>
                   <TableCell>{p.interestRate}%</TableCell>
                   <TableCell>{p.maxLTV}</TableCell>
                   <TableCell>
-                    {p.minLoanAmount} — {p.maxLoanAmount}
+                    ₹{p.minLoanAmount} — ₹{p.maxLoanAmount}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        )}
-      </CardContent>
-    </Card>
+
+        </CardContent>
+      </Card>
+
+    </PageShell>
   );
 }
