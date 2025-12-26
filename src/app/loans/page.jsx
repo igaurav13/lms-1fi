@@ -1,41 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { useLoans } from "@/hooks/useLoans";
 
 export default function LoansPage() {
-  const [loans, setLoans] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/loans")
-      .then(res => res.json())
-      .then(setLoans);
-  }, []);
+  const { data } = useLoans();
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Ongoing Loans</h1>
+    <Card className="w-[90%] mx-auto mt-8">
+      <CardHeader>
+        <CardTitle>Ongoing Loans</CardTitle>
+      </CardHeader>
 
-      <table className="w-full border">
-        <thead>
-          <tr>
-            <th>Borrower</th>
-            <th>Product</th>
-            <th>Outstanding</th>
-            <th>LTV</th>
-          </tr>
-        </thead>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Borrower</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead>Outstanding</TableHead>
+              <TableHead>LTV</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <tbody>
-          {loans.map(l => (
-            <tr key={l.id}>
-              <td>{l.loanApplication.borrower.fullName}</td>
-              <td>{l.loanApplication.loanProduct.name}</td>
-              <td>{l.outstanding}</td>
-              <td>{l.currentLTV?.toFixed?.(2) ?? "-"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          <TableBody>
+            {data?.map(l => (
+              <TableRow key={l.id}>
+                <TableCell>{l.loanApplication.borrower.fullName}</TableCell>
+                <TableCell>{l.loanApplication.loanProduct.name}</TableCell>
+                <TableCell>₹{l.outstanding}</TableCell>
+                <TableCell>{l.currentLTV?.toFixed(2) ?? "-"}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 }

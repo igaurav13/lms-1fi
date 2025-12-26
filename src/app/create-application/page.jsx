@@ -1,60 +1,79 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
+
+import { useBorrowers } from "@/hooks/useBorrowers";
+import { useLoanProducts } from "@/hooks/useLoanProducts";
+import { api } from "@/lib/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function CreateApplicationPage() {
-  const [borrowers, setBorrowers] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { data: borrowers } = useBorrowers();
+  const { data: products } = useLoanProducts();
+  const client = useQueryClient();
 
   const [borrowerId, setBorrowerId] = useState("");
   const [loanProductId, setLoanProductId] = useState("");
-  const [requestedAmount, setRequestedAmount] = useState("");
+  const [amount, setAmount] = useState("");
 
-  useEffect(() => {
-    fetch("/api/borrowers").then(r => r.json()).then(setBorrowers);
-    fetch("/api/loan-products").then(r => r.json()).then(setProducts);
-  }, []);
-
-  const submit = async () => {
-    await fetch("/api/loan-applications", {
-      method: "POST",
-      body: JSON.stringify({
+  const mutation = useMutation({
+    mutationFn: async () =>
+      api.post("/loan-applications", {
         borrowerId,
         loanProductId,
-        requestedAmount: Number(requestedAmount)
-      })
-    });
-
-    alert("Application created");
-  };
+        requestedAmount: Number(amount)
+      }),
+    onSuccess: () => {
+      client.invalidateQueries(["loan-applications"]);
+      alert("Application Created");
+    }
+  });
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Create Loan Application</h1>
+    <Card className="w-[90%] mx-auto mt-8">
+      <CardHeader>
+        <CardTitle>Create Loan Application</CardTitle>
+      </CardHeader>
 
-      <div className="space-y-3">
-        <select onChange={e => setBorrowerId(e.target.value)}>
-          <option>Select Borrower</option>
-          {borrowers.map(b => (
-            <option key={b.id} value={b.id}>{b.fullName}</option>
-          ))}
-        </select>
+      <CardContent className="space-y-4">
 
-        <select onChange={e => setLoanProductId(e.target.value)}>
-          <option>Select Product</option>
-          {products.map(p => (
-            <option key={p.id} value={p.id}>{p.name}</option>
-          ))}
-        </select>
+        <Select onValueChange={setBorrowerId}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select Borrower" />
+          </SelectTrigger>
+          <SelectContent>
+            {borrowers?.map(b => (
+              <SelectItem key={b.id} value={b.id}>{b.fullName}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <input
+        <Select onValueChange={setLoanProductId}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select Product" />
+          </SelectTrigger>
+          <SelectContent>
+            {products?.map(p => (
+              <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Input
           type="number"
           placeholder="Requested Amount"
-          onChange={e => setRequestedAmount(e.target.value)}
+          onChange={e => setAmount(e.target.value)}
         />
 
-        <button onClick={submit}>Submit</button>
-      </div>
-    </div>
+        <Button onClick={() => mutation.mutate()}>
+          Create Application
+        </Button>
+
+      </CardContent>
+    </Card>
   );
 }
