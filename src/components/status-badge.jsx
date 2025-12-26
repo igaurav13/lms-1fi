@@ -10,7 +10,7 @@ export function StatusBadge({ value }) {
   }[value] || "outline";
 
   return (
-    <Badge variant={variant} className="px-3 py-1 rounded-full">
+    <Badge variant={variant} className="px-4 py-2 rounded-lg border-[#6c28d9] bg-white">
       {value}
     </Badge>
   );

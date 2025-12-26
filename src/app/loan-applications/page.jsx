@@ -43,7 +43,7 @@ export default function LoanApplicationsPage() {
                   <TableCell>{a.loanProduct.name}</TableCell>
                   <TableCell>₹{a.requestedAmount}</TableCell>
                   <TableCell>
-                    <StatusBadge value={a.status} />
+                    <StatusBadge value={a.status}/>
                   </TableCell>
                 </TableRow>
               ))}
