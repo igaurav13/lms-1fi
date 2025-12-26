@@ -9,36 +9,7 @@ import { motion } from "framer-motion";
 
 export default function MutualFundsLandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-white">
-      {/* Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img
-              src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iMzQyIiBoZWlnaHQ9IjM0MiIgdmlld0JveD0iMCAwIDM0MiAzNDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNDIiIGhlaWdodD0iMzQyIiBmaWxsPSIjNkMyOEQ5Ii8+CjxwYXRoIGQ9Ik05OSAxMTAuMTQyTDExMy4xNDIgOTZMMTQ1LjgzMiAxMjguNjlDMTQ5LjczNyAxMzIuNTk1IDE0OS43MzcgMTM4LjkyNiAxNDUuODMyIDE0Mi44MzJDMTQxLjkyNiAxNDYuNzM3IDEzNS41OTUgMTQ2LjczNyAxMzEuNjkgMTQyLjgzMkw5OSAxMTAuMTQyWiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC41Ii8+CjxwYXRoIGQ9Ik0xMDYuOTE1IDk0QzExMi40MzggOTQgMTE2LjkxNSA5OC40NzcyIDExNi45MTUgMTA0VjI1MEg5Ni45MTVWMTI4LjA0NUw4MS4yMTE5IDE0My43NDhDNzcuMzA2NyAxNDcuNjUzIDcwLjk3NDYgMTQ3LjY1MyA2Ny4wNjkzIDE0My43NDhDNjMuMTY0MyAxMzkuODQzIDYzLjE2NDUgMTMzLjUxMiA2Ny4wNjkzIDEyOS42MDZMOTkuNzU4OCA5Ni45MTZMOTkuODA3NiA5Ni45NjQ4QzEwMS42MiA5NS4xMzM5IDEwNC4xMzUgOTQuMDAwMSAxMDYuOTE1IDk0Wk0yMzEuOTE1IDk0QzIzNy40MzggOTQgMjQxLjkxNSA5OC40NzcyIDI0MS45MTUgMTA0QzI0MS45MTUgMTA5LjUyMyAyMzcuNDM4IDExNCAyMzEuOTE1IDExNEgxNzQuOTE1VjE2MkgyMTkuOTE1QzIyNS40MzggMTYyIDIyOS45MTUgMTY2LjQ3NyAyMjkuOTE1IDE3MkMyMjkuOTE1IDE3Ny41MjMgMjI1LjQzOCAxODIgMjE5LjkxNSAxODJIMTc0LjkxNVYyNTBIMTU0LjkxNVY5NEgyMzEuOTE1Wk0yNzEuOTE1IDEzOS4wNTRDMjc3LjQzOCAxMzkuMDU0IDI4MS45MTUgMTQzLjUzMSAyODEuOTE1IDE0OS4wNTRWMjUwSDI2MS45MTVWMTQ5LjA1NEMyNjEuOTE1IDE0My41MzEgMjY2LjM5MiAxMzkuMDU0IDI3MS45MTUgMTM5LjA1NFpNMjgxLjk5NyAxMDRDMjgxLjk5NyAxMDkuNTIzIDI3Ny41MiAxMTQgMjcxLjk5NyAxMTRDMjY2LjQ3NCAxMTQgMjYxLjk5NyAxMDkuNTIzIDI2MS45OTcgMTA0QzI2MS45OTcgOTguNDc3MiAyNjYuNDc0IDk0LjAwMDEgMjcxLjk5NyA5NEgyODEuOTk3VjEwNFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo="
-              alt="Logo"
-              className="w-9 h-9 rounded-2xl object-contain"
-            />
-            <nav className="hidden md:flex gap-6 text-sm font-medium">
-              <a className="hover:text-purple-700" href="/loan-applications">Loan Applications</a>
-              <a className="hover:text-purple-700" href="/loan-products">Loan Products</a>
-              <a className="hover:text-purple-700" href="/loans">Loans</a>
-              <a className="hover:text-purple-700" href="/create-application">Create Application</a>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Button variant="outline" className="rounded-xl">
-              <User className="w-4 h-4 mr-1" /> Login
-            </Button>
-            <Button className="rounded-xl bg-purple-600 hover:bg-purple-700">
-              Check Eligibility
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-linear-to-b from-purple-50 via-white to-white">
       {/* Hero Section */}
       <section className="max-w-5xl mx-auto px-4 text-center py-20">
         <motion.div
