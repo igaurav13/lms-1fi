@@ -120,7 +120,7 @@ export default function CreateApplicationPage() {
           </div>
 
           {/* Action Footer */}
-          <div className="flex justify-end pt-4 border-t">
+          <div className="flex justify-start pt-4">
             <Button
               onClick={() => mutation.mutate()}
               className="cursor-pointer text-white py-3 px-4"

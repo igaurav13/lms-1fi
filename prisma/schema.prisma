@@ -16,10 +16,8 @@ model LoanProduct {
   minLoanAmount   Float
   maxLoanAmount   Float
   status          String            @default("ACTIVE")
-
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-
   loanApplications LoanApplication[]
 }
 
@@ -30,10 +28,8 @@ model Borrower {
   mobile    String
   email     String
   kycStatus String                  @default("PENDING")
-
   createdAt DateTime                @default(now())
   updatedAt DateTime                @updatedAt
-
   loanApplications LoanApplication[]
 }
 
@@ -41,18 +37,13 @@ model LoanApplication {
   id              String            @id @default(uuid())
   borrowerId      String
   loanProductId   String
-
   requestedAmount Float
   eligibleAmount  Float?
-
   status          String            @default("DRAFT")
-
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-
   borrower    Borrower              @relation(fields: [borrowerId], references: [id])
   loanProduct LoanProduct           @relation(fields: [loanProductId], references: [id])
-
   collaterals Collateral[]
   loan        Loan?
 }
@@ -60,31 +51,24 @@ model LoanApplication {
 model Collateral {
   id                String           @id @default(uuid())
   loanApplicationId String
-
   fundName          String
   isin              String
   unitsPledged      Float
   nav               Float
   currentValue      Float
-
   createdAt         DateTime          @default(now())
-
   loanApplication LoanApplication      @relation(fields: [loanApplicationId], references: [id])
 }
 
 model Loan {
   id                String            @id @default(uuid())
   loanApplicationId String            @unique
-
   principal         Float
   outstanding       Float
   interestAccrued   Float
   currentLTV        Float
-
   status            String            @default("ACTIVE")
-
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
-
   loanApplication LoanApplication     @relation(fields: [loanApplicationId], references: [id])
 }

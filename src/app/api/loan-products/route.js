@@ -27,17 +27,17 @@ export async function POST(req) {
     }
 
     // LTV thresholds must increase with risk severity
-    if (
-      body.maxLTV <= 0 || body.maxLTV >= 1 ||
-      body.marginCallLTV <= 0 || body.marginCallLTV >= 1 ||
-      body.liquidationLTV <= 0 || body.liquidationLTV >= 1 ||
-      !(body.maxLTV < body.marginCallLTV && body.marginCallLTV < body.liquidationLTV)
-    ) {
-      return Response.json(
-        { error: "Invalid LTV configuration — expected maxLTV < marginCallLTV < liquidationLTV" },
-        { status: 400 }
-      );
+    if( body.maxLTV <= 0 || body.maxLTV >= 1 ||
+        body.marginCallLTV <= 0 || body.marginCallLTV >= 1 ||
+        body.liquidationLTV <= 0 || body.liquidationLTV >= 1 ||
+        !(body.maxLTV < body.marginCallLTV && body.marginCallLTV < body.liquidationLTV)
+      ) {
+        return Response.json(
+          { error: "Invalid LTV configuration — expected maxLTV < marginCallLTV < liquidationLTV" },
+          { status: 400 }
+        );
     }
+
 
     const product = await prisma.loanProduct.create({
       data: {
@@ -52,7 +52,7 @@ export async function POST(req) {
       }
     });
 
-    return Response.json(product, { status: 201 });
+  return Response.json(product, { status: 201 });
 
   } catch (err) {
     console.error("Loan Product Create Error", err);
