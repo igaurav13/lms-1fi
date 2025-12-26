@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
 
-/**
- * Runs eligibility against pledged MF collateral
- */
 export async function POST(req) {
   try {
     const body = await req.json();

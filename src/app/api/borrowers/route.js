@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
 
-/**
- * Create Borrower
- */
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -37,9 +34,6 @@ export async function POST(req) {
 }
 
 
-/**
- * List Borrowers
- */
 export async function GET() {
   const borrowers = await prisma.borrower.findMany({
     orderBy: { createdAt: "desc" }

@@ -108,7 +108,6 @@ export default function CreateApplicationPage() {
             </Select>
           </div>
 
-          {/* Requested Amount */}
           <div className="space-y-2">
             <p className="text-sm font-medium">Requested Loan Amount</p>
 
@@ -119,7 +118,6 @@ export default function CreateApplicationPage() {
             />
           </div>
 
-          {/* Action Footer */}
           <div className="flex justify-start pt-4">
             <Button
               onClick={() => mutation.mutate()}

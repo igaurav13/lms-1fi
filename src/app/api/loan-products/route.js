@@ -64,9 +64,6 @@ export async function POST(req) {
 }
 
 
-/**
- * List Loan Products
- */
 export async function GET() {
   const products = await prisma.loanProduct.findMany({
     orderBy: { createdAt: "desc" }

@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-
 import { PageShell } from "@/components/page-shell";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 import {
   Table,
   TableHeader,
@@ -15,7 +12,6 @@ import {
   TableBody,
   TableCell
 } from "@/components/ui/table";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -64,7 +60,6 @@ export default function LoanProductsPage() {
       "maxLoanAmount"
     ];
 
-    // convert numeric fields
     const n = Object.fromEntries(
       Object.entries(form).map(([k, v]) => 
         numericFields.includes(k)
@@ -73,7 +68,6 @@ export default function LoanProductsPage() {
         )
     );
 
-    // LTV threshold rule
     if (!(n.maxLTV < n.marginCallLTV && n.marginCallLTV < n.liquidationLTV)) {
       alert("LTV thresholds must satisfy maxLTV < marginCallLTV < liquidationLTV");
       return;
@@ -100,7 +94,6 @@ export default function LoanProductsPage() {
   return (
     <PageShell>
 
-      {/* Header */}
       <div className="flex flex-col mb-6 gap-4">
 
         <PageHeader

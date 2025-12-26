@@ -41,7 +41,6 @@ export async function POST(req) {
       }
     });
 
-    // Move application → DISBURSED
     await prisma.loanApplication.update({
       where: { id: app.id },
       data: { status: "DISBURSED" }

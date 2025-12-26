@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
 
-/**
- * Attach Collateral to Loan Application
- */
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -60,9 +57,7 @@ export async function POST(req) {
 }
 
 
-/**
- * List Collaterals
- */
+
 export async function GET() {
   const collaterals = await prisma.collateral.findMany({
     include: { loanApplication: true },
