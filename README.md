@@ -16,7 +16,7 @@ A demo **Loan Management System (LMS)** for an NBFC offering **LAMF (Lending Aga
 
 ```bash
 git clone https://github.com/igaurav13/lms-1fi
-cd 1fi-lms
+cd lms-1fi
 npm install
 
 OR
