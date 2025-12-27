@@ -12,15 +12,19 @@ A demo **Loan Management System (LMS)** for an NBFC offering **LAMF (Lending Aga
 * Docker — or PostgreSQL
 * npm
 
-### 1) Clone & install
+### 1) Clone & install via github OR pull the docker image(Recommended)
 
 ```bash
 git clone https://github.com/igaurav13/lms-1fi
 cd 1fi-lms
 npm install
+
+OR
+
+docker pull igauravpsd/1fi:latest
 ```
 
-### 2) Start database (recommended)
+### 2) Start database
 
 ```bash
 docker run -p 3000:3000 \
