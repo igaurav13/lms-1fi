@@ -12,7 +12,7 @@ export async function POST(req) {
     }
 
     const loan = await prisma.loan.findUnique({
-      where: { id: body.loanId }
+      where: { id: body.loan }
     });
 
     if (!loan) {
