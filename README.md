@@ -405,7 +405,7 @@ Evaluates MF holdings against eligibility rules (AMC whitelist, scheme type, hai
 ### Active Loans
 
 ##### `GET /loans`
-```
+```json
 [
     {
         "id": "455297c7-b395-4178-8c15-e08b9a2baec1",
